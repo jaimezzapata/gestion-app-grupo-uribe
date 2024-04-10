@@ -18,7 +18,7 @@ const ListarUsuarios = () => {
         <section>
           <p>Usuario: {usuario.usuario}</p>
           <p>Contraseña: {usuario.contrasena}</p>
-          <p>Correo: {usuario.correo}</p>
+          <p>Correo:{usuario.correo}</p>
         </section>;
       })}
     </div>
