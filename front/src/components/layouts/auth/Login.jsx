@@ -1,9 +1,10 @@
 import userLogo from "../../../assets/user.avif";
-import { useState } from "react";
-import { usuarios } from "../../../database/dataBase";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import './Login.css'
+import axios from "axios";
+let apiUsuarios = "http://localhost:5174/usuarios";
 
 const Login = () => {
   const [getUsuario, setUsuario] = useState("");
@@ -11,13 +12,23 @@ const Login = () => {
   const [getCorreo, setCorreo] = useState("");
   let redireccion = useNavigate()
 
+  const [usuarios, setUsuarios] = useState([]);
+  const getUsuarios = async () => {
+    let resultado = await axios.get(apiUsuarios);
+    console.log(usuarios)
+    setUsuarios(resultado.data);
+  };
+
+  useEffect(() => {
+    getUsuarios()
+  }, [])
+
   const buscarUsuario = () => {
     let estado = usuarios.some((usuario) => {
       if (
-        getUsuario === usuario.usuario 
-        // &&
-        // getContrasena === usuario.contrasena &&
-        // getCorreo === usuario.correo
+        getUsuario === usuario.usuario &&
+        getContrasena === usuario.contrasena &&
+        getCorreo === usuario.correo
       ) {
         return true;
       }

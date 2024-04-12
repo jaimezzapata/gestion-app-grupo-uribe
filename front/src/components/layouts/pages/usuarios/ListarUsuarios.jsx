@@ -1,26 +1,33 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 let apiUsuarios = "http://localhost:5174/usuarios";
 
 const ListarUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
   const getUsuarios = async () => {
     let resultado = await axios.get(apiUsuarios);
+    console.log(usuarios)
     setUsuarios(resultado.data);
   };
+
+  useEffect(() => {
+    getUsuarios()
+  }, [])
+
   console.log(usuarios);
   return (
-    <div>
-      <button onClick={getUsuarios} type="button">
-        Listar Usuario
-      </button>
-      {usuarios.map((usuario) => {
+    <div className="cards">
+      {usuarios.map((usuario) => (
         <section>
           <p>Usuario: {usuario.usuario}</p>
           <p>Contraseña: {usuario.contrasena}</p>
           <p>Correo:{usuario.correo}</p>
-        </section>;
-      })}
+          <div>
+            <button>Eliminar</button>
+            <button>Editar</button>
+          </div>
+        </section>
+      ))}
     </div>
   );
 };
