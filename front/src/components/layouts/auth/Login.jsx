@@ -3,6 +3,7 @@ import { useState } from "react";
 import { usuarios } from "../../../database/dataBase";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import './Login.css'
 
 const Login = () => {
   const [getUsuario, setUsuario] = useState("");
