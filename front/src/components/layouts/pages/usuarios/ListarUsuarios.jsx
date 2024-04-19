@@ -9,11 +9,12 @@ const ListarUsuarios = () => {
     console.log(usuarios)
     setUsuarios(resultado.data);
   };
-
   useEffect(() => {
     getUsuarios()
   }, [])
-
+  function eliminarUsuario(id) {
+    console.log('Eliminado...' + id)
+  }
   console.log(usuarios);
   return (
     <div className="cards">
@@ -23,7 +24,7 @@ const ListarUsuarios = () => {
           <p>Contraseña: {usuario.contrasena}</p>
           <p>Correo:{usuario.correo}</p>
           <div>
-            <button>Eliminar</button>
+            <button onClick={() => eliminarUsuario(usuario.id)}>Eliminar</button>
             <button>Editar</button>
           </div>
         </section>

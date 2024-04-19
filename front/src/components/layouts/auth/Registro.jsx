@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { usuarios } from "../../../database/dataBase";
 import { useNavigate } from "react-router-dom";
+import { v4 } from 'uuid'
 import Swal from "sweetalert2";
 import './Login.css'
 import axios from "axios";
@@ -29,7 +30,7 @@ const Registro = () => {
 
     const agrearUsuario = async () => {
         let usuarioNuevo = {
-            id: Math.round(Math.random() * 100).toFixed(0),
+            id: v4(),
             usuario: getUsuario,
             contrasena: getContrasena,
             correo: getCorreo
