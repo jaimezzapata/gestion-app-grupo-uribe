@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+
 let apiUsuarios = "http://localhost:5174/usuarios";
 
 const ListarUsuarios = () => {
@@ -12,19 +14,42 @@ const ListarUsuarios = () => {
   useEffect(() => {
     getUsuarios()
   }, [])
-  function eliminarUsuario(id) {
-    console.log('Eliminado...' + id)
+
+  async function eliminarUsuario(id) {
+    await axios.delete(apiUsuarios + '/' + id)
+    getUsuarios()
+  }
+
+  function confirmarAccion(id, usuario, correo) {
+    Swal.fire({
+      title: "¿Está seguro que desea eliminar el usuario?: " + usuario + ' ' + correo,
+      text: "Esta acción no se puede revertir!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminarUsuario(id)
+        Swal.fire({
+          title: "Eliminado!",
+          text: "El usuario se eliminó correctamente.",
+          icon: "success"
+        });
+      }
+    });
   }
   console.log(usuarios);
   return (
     <div className="cards">
       {usuarios.map((usuario) => (
-        <section>
+        <section key={usuario.id}>
           <p>Usuario: {usuario.usuario}</p>
           <p>Contraseña: {usuario.contrasena}</p>
           <p>Correo:{usuario.correo}</p>
           <div>
-            <button onClick={() => eliminarUsuario(usuario.id)}>Eliminar</button>
+            <button onClick={() => confirmarAccion(usuario.id, usuario.usuario, usuario.correo)}>Eliminar</button>
             <button>Editar</button>
           </div>
         </section>
